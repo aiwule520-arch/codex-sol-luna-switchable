@@ -1,0 +1,11 @@
+# Sol XHigh only — Luna/multi-agent kill switch
+model = "gpt-6-sol"
+model_reasoning_effort = "xhigh"
+service_tier = "default"
+
+[features]
+multi_agent = false
+fast_mode = true
+
+[agents]
+enabled = false

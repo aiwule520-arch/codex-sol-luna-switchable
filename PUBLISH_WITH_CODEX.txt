@@ -1,0 +1,64 @@
+在我的桌面找到 `codex-sol-luna-switchable-public-v0.1.0.zip`，把它作为一个新的公共 GitHub 仓库发布。
+
+目标仓库名：
+`codex-sol-luna-switchable`
+
+执行要求：
+
+1. 先运行 `gh auth status`，确认当前 GitHub CLI 已登录。不要显示、打印或读取任何 token 内容。
+2. 在桌面创建一个临时工作目录，把 ZIP 解压进去。
+3. 阅读并检查：
+   - README.md
+   - PUBLISH.md
+   - RELEASE_POLICY.md
+   - SECURITY.md
+   - docs/COMPATIBILITY.md
+   - .github/workflows/
+4. 运行：
+   - `python scripts/validate.py`
+   - `git diff --check`（初始化 git 后再次运行）
+5. 确认仓库里没有 API key、GitHub token、私有路径、私有源码、客户数据或个人配置。
+6. 不要擅自修改模型、reasoning、context、compact、profile 或 agent 配置。只有发现明确的发布阻断问题时才做最小修复，并在最终报告中说明。
+7. 初始化 git：
+   - 默认分支 `main`
+   - 首次 commit message 使用 `feat: initial public release`
+8. 使用当前 `gh` 已登录账号创建 PUBLIC 仓库：
+   `codex-sol-luna-switchable`
+9. Repository description 设置为：
+   `Switchable Codex profiles: GPT-6 Sol XHigh orchestrates while GPT-6 Luna handles bounded exploration, implementation, testing, and review.`
+10. 添加 topics：
+    - codex
+    - gpt-6
+    - ai-agents
+    - multi-agent
+    - orchestration
+    - developer-tools
+11. push `main`。
+12. 创建 annotated tag：
+    `v0.1.0`
+13. push tag，让仓库自带的 GitHub Actions Release workflow 自动创建 GitHub Release。
+14. 检查 GitHub Actions：
+    - Validate workflow 是否通过
+    - Release workflow 是否通过
+15. 检查 GitHub Release `v0.1.0` 是否存在，并确认包含：
+    - `codex-sol-luna-switchable-v0.1.0.zip`
+    - `SHA256SUMS.txt`
+16. 如果 Release workflow 失败，读取失败原因；只修复仓库自身的问题，然后提交一个修复 commit，重新创建适当的新 patch tag。不要篡改已发布 release asset。
+17. 在仓库设置允许的范围内，启用/确认：
+    - Issues
+    - private vulnerability reporting（如果账号/仓库界面支持）
+    - secret scanning / push protection（如果当前 public repo 可用）
+18. 不要创建 GitHub Pages，不要创建收费服务，不要安装未知第三方 GitHub App。
+19. 不要 force-push，不要删除其他仓库，不要修改我账号里的无关设置。
+20. 最终给我报告：
+    - GitHub 仓库 URL
+    - main commit SHA
+    - release URL
+    - tag
+    - Validate 状态
+    - Release 状态
+    - Release assets
+    - Community files 是否齐全
+    - 任何未能启用的 GitHub 安全设置及原因
+
+这是我明确授权你创建这个新的 PUBLIC GitHub 仓库、push 这套开源配置并发布 v0.1.0 Release。除上述范围外，不要进行其他外部修改。

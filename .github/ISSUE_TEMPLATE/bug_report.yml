@@ -1,0 +1,46 @@
+name: Bug report
+description: Report a reproducible install, routing, profile, or validation problem
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: "Do not include credentials, private source code, customer data, or sensitive logs."
+  - type: input
+    id: codex
+    attributes:
+      label: Codex CLI version
+      placeholder: "codex-cli 0.x.y"
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options: [Windows, macOS, Linux, WSL]
+    validations:
+      required: true
+  - type: dropdown
+    id: profile
+    attributes:
+      label: Profile
+      options: [sol-luna, sol-only, sol-luna-fast, Other]
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior and minimal reproduction
+    validations:
+      required: true
+  - type: textarea
+    id: sanitized
+    attributes:
+      label: Sanitized diagnostics
+      description: Remove secrets, private paths/data, prompts, and proprietary code.

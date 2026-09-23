@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+mode="${1:-}"
+if [[ $# -gt 0 ]]; then shift; fi
+
+case "$mode" in
+  on) profile="sol-luna" ;;
+  off) profile="sol-only" ;;
+  fast) profile="sol-luna-fast" ;;
+  *)
+    echo "Usage: codex-mode {on|off|fast} [codex args...]" >&2
+    exit 2
+    ;;
+esac
+
+exec codex --profile "$profile" "$@"
