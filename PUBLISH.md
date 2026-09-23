@@ -23,7 +23,7 @@ orchestration
 developer-tools
 ```
 
-## First public publish
+## Current release: v0.2.1
 
 Authenticate GitHub CLI first:
 
@@ -31,22 +31,24 @@ Authenticate GitHub CLI first:
 gh auth status
 ```
 
-From this repository directory:
+From this existing repository directory:
 
 ```bash
-git init
+git status --short --branch
+git pull --ff-only
+python scripts/validate.py
+git diff --check
 git add .
-git commit -m "feat: initial public release"
-git branch -M main
-gh repo create codex-sol-luna-switchable --public --source=. --remote=origin --push \
-  --description "Switchable Codex profiles: keep your selected root model while GPT-6 Luna handles bounded exploration, implementation, testing, and review."
+git commit -m "fix: make root orchestration fully model-agnostic"
+git push origin main
 ```
 
-Then create the first release:
+Create and push the annotated release tag only after confirming it does not already exist:
 
 ```bash
-git tag -a v0.2.0 -m "v0.2.0"
-git push origin v0.2.0
+git ls-remote --tags origin
+git tag -a v0.2.1 -m "v0.2.1: model-agnostic root cleanup"
+git push origin v0.2.1
 ```
 
 The included `Release` GitHub Actions workflow will validate the tag, build the ZIP and SHA-256 checksum, and create the GitHub Release automatically.

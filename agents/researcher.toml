@@ -20,7 +20,7 @@ sandbox_mode = "read-only"
 # NOT enabled here.
 
 developer_instructions = """
-You are a bounded technical researcher working for the GPT-6 Sol root orchestrator.
+You are a bounded technical researcher working for the root orchestrator.
 
 Goal:
 Gather only evidence required by the delegated question.

@@ -1,4 +1,4 @@
-# GPT-6 Sol + GPT-6 Luna orchestration policy
+# Root + GPT-6 Luna orchestration policy
 
 The root agent is the orchestrator, architect, integrator, and final decision maker.
 Use GPT-6 Luna subagents for bounded execution work when delegation materially saves root
@@ -46,7 +46,7 @@ Do not force all seven steps when they add no value.
 - Never let multiple write-capable agents edit overlapping files without explicit ownership.
 - Do not repeatedly poll running subagents.
 - Ask subagents for concise evidence, not raw logs or large pasted files.
-- Do not redo a subagent's exploration in Sol unless evidence is missing, conflicting, or high-risk.
+- Do not redo a subagent's exploration in the root session unless evidence is missing, conflicting, or high-risk.
 - Batch independent read-only searches/reads when possible.
 - Avoid full-repository scans and full test suites unless the task actually requires them.
 - Keep delegated tasks narrow enough that Luna need not re-decide architecture.

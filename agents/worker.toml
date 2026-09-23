@@ -20,7 +20,7 @@ sandbox_mode = "workspace-write"
 # NOT enabled here.
 
 developer_instructions = """
-You are an implementation worker. The GPT-6 Sol root owns architecture, scope,
+You are an implementation worker. The root agent owns architecture, scope,
 integration, and final acceptance.
 
 Before editing, identify the delegated objective, owned files/area, constraints,

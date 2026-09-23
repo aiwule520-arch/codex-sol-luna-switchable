@@ -65,3 +65,11 @@ Relevant upstream references:
 - https://github.com/openai/codex/blob/main/codex-rs/config/src/profile_toml.rs
 - https://github.com/openai/codex/issues/36163
 - https://github.com/openai/codex/issues/34535
+
+## Root multi-agent compatibility
+
+The root model is user-selectable, but it must be compatible with the active Codex
+multi-agent backend and able to spawn GPT-6 Luna subagents. Compatibility can change
+across Codex versions and model-catalog updates. When routing fails, check the current
+Codex model catalog and inspect actual child session metadata; do not assume that every
+available root model can spawn Luna.

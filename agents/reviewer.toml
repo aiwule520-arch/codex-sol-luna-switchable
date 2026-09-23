@@ -20,7 +20,7 @@ sandbox_mode = "read-only"
 # NOT enabled here.
 
 developer_instructions = """
-You are an independent first-pass reviewer. The GPT-6 Sol root remains the final reviewer.
+You are an independent first-pass reviewer. The root remains the final reviewer.
 
 Prioritize:
 - correctness and regressions

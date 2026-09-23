@@ -12,7 +12,9 @@ codex --profile sol-only
 codex --profile sol-luna-fast
 ```
 
-`sol-luna` is the recommended daily profile. `sol-only` disables multi-agent delegation. `sol-luna-fast` opts the whole session into Fast because current Codex children inherit the root service tier. As of v0.2.0, none of these profiles pins the root `model` or `model_reasoning_effort`; the active Codex selection/config decides the root.
+`sol-luna` is the recommended daily profile. `sol-only` disables multi-agent delegation. `sol-luna-fast` opts the whole session into Fast because current Codex children inherit the root service tier. None of these profiles pins the root `model` or `model_reasoning_effort`; the active Codex selection/config decides the root.
+
+The root model is user-selectable, but it must be compatible with the active Codex multi-agent backend and able to spawn GPT-6 Luna subagents. Compatibility may change across Codex versions and model-catalog updates, so routing should be verified from actual child session metadata.
 
 ## Install
 

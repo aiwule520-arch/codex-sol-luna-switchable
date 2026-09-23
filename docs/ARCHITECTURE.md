@@ -25,6 +25,5 @@ The concurrency cap is four, but the policy prefers one to three useful agents f
 
 ## Compatibility naming
 
-The profile names `sol-luna`, `sol-only`, and `sol-luna-fast` are retained in v0.2.0 so
-existing installs and launchers do not break. The names are historical: they no longer
-force the root to GPT-6 Sol.
+The profile names `sol-luna`, `sol-only`, and `sol-luna-fast` remain for backward
+compatibility. They do not determine the root model.

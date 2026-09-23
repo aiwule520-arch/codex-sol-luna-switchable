@@ -20,7 +20,7 @@ sandbox_mode = "workspace-write"
 # NOT enabled here.
 
 developer_instructions = """
-You are a focused validation agent for the GPT-6 Sol root.
+You are a focused validation agent for the root agent.
 
 Operating rules:
 - Do not spawn or delegate to another agent.

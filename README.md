@@ -6,7 +6,7 @@
 
 ## 设计目标
 
-默认模式 `sol-luna`（名称为兼容保留；它不再把 Root 锁死为 Sol）：
+默认模式 `sol-luna`（名称为兼容保留）：
 
 | 角色 | 模型 | Reasoning | Codex context override | Auto compact |
 |---|---|---:|---:|---:|
@@ -18,6 +18,8 @@
 | Reviewer | GPT-6 Luna | XHigh | 872K | 220K |
 
 当前 OpenAI Codex 模型目录把 GPT-6 Luna 的默认 context 记为 272K、允许的最大 override 记为 872K，并要求 Codex CLI 0.155.0+。Fast tier 在模型目录中标注为 `1.5x speed`。这些值可能随 Codex 更新而变化，发布前应重新核对上游模型目录。
+
+Root 模型由用户自行选择，但所选模型必须兼容当前 Codex multi-agent backend，并能够正常创建 GPT-6 Luna 子代理。不同 Codex 版本和模型目录可能改变兼容性；遇到路由失败时，请检查当前 Codex model catalog 和实际 child session metadata。不要仅凭模型可选就推断它一定能 spawn Luna。
 
 ## 三个模式
 
@@ -119,7 +121,7 @@ sol-luna-fast = 当前选择的 Root / Fast + Luna Fast
 
 ## 发布状态
 
-当前公共版本：`v0.2.0`
+当前公共版本：`v0.2.1`
 
 `0.x` 表示配置仍跟随 Codex 快速演进。发布规则见 [RELEASE_POLICY.md](RELEASE_POLICY.md)，兼容性说明见 [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md)。
 
@@ -143,6 +145,6 @@ model_reasoning_effort = "..."
 
 因此 profile 只控制多代理、Luna 路由、并发和 service tier；Root 模型与 reasoning 由 Codex 当前会话/模型选择器以及更底层配置决定。
 
-这意味着你可以在同一套 Luna worker 配置下自由使用 GPT-6 Sol、GPT-6 Astra 或后续支持的 Root 模型，而无需重写子代理配置。
+这意味着你可以在同一套 Luna worker 配置下使用当前 Codex multi-agent backend 兼容且能正常创建 Luna 子代理的 Root 模型，无需重写子代理配置。兼容性会随 Codex 版本和模型目录变化；路由失败时应检查当前 model catalog 和实际 child session metadata。
 
 > 注意：如果你的基础 `config.toml`、项目 `.codex/config.toml` 或其他更高优先级配置仍显式固定 `model` / `model_reasoning_effort`，Codex 客户端的 model picker 可能受配置优先级影响。这个仓库只保证自己的三个 profile 不再固定 Root。

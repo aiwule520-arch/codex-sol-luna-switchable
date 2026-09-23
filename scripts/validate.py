@@ -11,7 +11,7 @@ def load(path):
 errors = []
 
 version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
-if version != "0.2.0":
+if version != "0.2.1":
     errors.append(f"unexpected VERSION: {version}")
 
 profiles = {
@@ -65,6 +65,38 @@ expected_effort = {
 for name, effort in expected_effort.items():
     if agents.get(name, {}).get("model_reasoning_effort") != effort:
         errors.append(f"{name}: expected reasoning {effort}")
+
+expected_compact = {
+    "explorer.toml": 200000,
+    "researcher.toml": 200000,
+    "worker.toml": 240000,
+    "tester.toml": 180000,
+    "reviewer.toml": 220000,
+}
+expected_sandbox = {
+    "explorer.toml": "read-only",
+    "researcher.toml": "read-only",
+    "worker.toml": "workspace-write",
+    "tester.toml": "workspace-write",
+    "reviewer.toml": "read-only",
+}
+for name in required_agents:
+    if agents.get(name, {}).get("model_auto_compact_token_limit") != expected_compact[name]:
+        errors.append(f"{name}: unexpected auto compact threshold")
+    if agents.get(name, {}).get("sandbox_mode") != expected_sandbox[name]:
+        errors.append(f"{name}: unexpected sandbox mode")
+
+forbidden_root_phrases = [
+    "GPT-6 Sol root",
+    "GPT-6 Sol root orchestrator",
+    "the GPT-6 Sol root",
+]
+prompt_files = list((ROOT / "agents").glob("*.toml")) + [ROOT / "templates" / "AGENTS.md"]
+for path in prompt_files:
+    text = path.read_text(encoding="utf-8").lower()
+    for phrase in forbidden_root_phrases:
+        if phrase.lower() in text:
+            errors.append(f"{path.relative_to(ROOT)} contains forbidden root-model phrase: {phrase}")
 
 for path in ROOT.rglob("*"):
     if not path.is_file() or ".git" in path.parts or "dist" in path.parts:

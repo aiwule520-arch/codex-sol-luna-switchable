@@ -2,6 +2,16 @@
 
 All notable changes are documented here.
 
+## [0.2.1] - 2026-09-23
+
+### Fixed
+
+- Removed hard-coded GPT-6 Sol root references from Luna agent prompts.
+- Made the orchestration template fully root-model-agnostic.
+- Documented multi-agent compatibility requirements for user-selected root models.
+- Strengthened validation against future root-model hard-coding.
+- Updated GitHub Actions runtime dependencies to actions/checkout@v7 and actions/setup-python@v7.
+
 ## [0.2.0] - 2026-09-23
 
 ### Changed
