@@ -48,3 +48,20 @@ Before a release:
 3. Check whether the child service-tier issues are still applicable.
 4. Run the repository validation workflow.
 5. Test at least one real `explorer` and `worker` child on a current Codex CLI.
+
+
+## Root model selection
+
+From v0.2.0, this project intentionally omits `model` and `model_reasoning_effort` from all
+three root profiles. In current Codex source, both are optional configuration overrides.
+
+This avoids the profile itself locking the root model. Actual picker behavior can still be
+affected by other configuration layers. Upstream issues have documented cases where
+project-scoped explicit model/reasoning values prevent or override picker choices.
+
+Relevant upstream references:
+
+- https://github.com/openai/codex/blob/main/codex-rs/config/src/config_toml.rs
+- https://github.com/openai/codex/blob/main/codex-rs/config/src/profile_toml.rs
+- https://github.com/openai/codex/issues/36163
+- https://github.com/openai/codex/issues/34535

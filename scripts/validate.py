@@ -11,7 +11,7 @@ def load(path):
 errors = []
 
 version = (ROOT / "VERSION").read_text(encoding="utf-8").strip()
-if version != "0.1.0":
+if version != "0.2.0":
     errors.append(f"unexpected VERSION: {version}")
 
 profiles = {
@@ -30,12 +30,14 @@ if set(agents) != required_agents:
     errors.append(f"agent set mismatch: {sorted(agents)}")
 
 daily = profiles.get("sol-luna.config.toml", {})
-if daily.get("model") != "gpt-6-sol":
-    errors.append("daily root model must be gpt-6-sol")
-if daily.get("model_reasoning_effort") != "xhigh":
-    errors.append("daily root reasoning must be xhigh")
 if daily.get("service_tier") != "default":
     errors.append("daily root service tier must be default")
+
+for profile_name, cfg in profiles.items():
+    if "model" in cfg:
+        errors.append(f"{profile_name}: root model must remain user-selectable (remove model)")
+    if "model_reasoning_effort" in cfg:
+        errors.append(f"{profile_name}: root reasoning must remain user-selectable (remove model_reasoning_effort)")
 
 fast = profiles.get("sol-luna-fast.config.toml", {})
 if fast.get("service_tier") != "fast":

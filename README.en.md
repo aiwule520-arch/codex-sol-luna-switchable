@@ -1,6 +1,6 @@
 # Codex Sol/Luna Switchable
 
-A community configuration for Codex CLI that keeps **GPT-6 Sol XHigh** as the root orchestrator and delegates bounded exploration, research, implementation, testing, and first-pass review to **GPT-6 Luna**.
+A community configuration for Codex CLI that keeps the **root model user-selectable** while delegating bounded exploration, research, implementation, testing, and first-pass review to **GPT-6 Luna**.
 
 > Independent community project. Not affiliated with or endorsed by OpenAI. Model and Codex availability depend on account, plan, region, and client version.
 
@@ -12,7 +12,7 @@ codex --profile sol-only
 codex --profile sol-luna-fast
 ```
 
-`sol-luna` is the recommended daily profile. `sol-only` disables multi-agent delegation. `sol-luna-fast` opts the whole session into Fast because current Codex children inherit the root service tier.
+`sol-luna` is the recommended daily profile. `sol-only` disables multi-agent delegation. `sol-luna-fast` opts the whole session into Fast because current Codex children inherit the root service tier. As of v0.2.0, none of these profiles pins the root `model` or `model_reasoning_effort`; the active Codex selection/config decides the root.
 
 ## Install
 

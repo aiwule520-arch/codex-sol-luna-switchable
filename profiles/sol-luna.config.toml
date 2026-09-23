@@ -1,6 +1,4 @@
-# Sol XHigh root + Luna role workers (recommended daily profile)
-model = "gpt-6-sol"
-model_reasoning_effort = "xhigh"
+# User-selected root model + Luna role workers (recommended daily profile)
 service_tier = "default"
 
 [features]

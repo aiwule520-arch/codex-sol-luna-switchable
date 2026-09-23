@@ -2,6 +2,21 @@
 
 All notable changes are documented here.
 
+## [0.2.0] - 2026-09-23
+
+### Changed
+
+- Root model and reasoning are no longer pinned by any project profile.
+- The active Codex model selection/config now determines the root model and reasoning.
+- GPT-6 Luna named agents remain pinned to the same High/XHigh role configuration.
+- Existing `sol-luna`, `sol-only`, and `sol-luna-fast` profile names are retained for backward compatibility.
+- Documentation now distinguishes root model selection from Luna worker routing.
+
+### Compatibility
+
+- Existing launch commands continue to work.
+- Users with explicit `model` / `model_reasoning_effort` in other Codex config layers may still see picker-precedence behavior from Codex itself.
+
 ## [0.1.0] - 2026-09-23
 
 ### Added

@@ -1,6 +1,4 @@
-# Sol XHigh only — Luna/multi-agent kill switch
-model = "gpt-6-sol"
-model_reasoning_effort = "xhigh"
+# User-selected root model only — Luna/multi-agent kill switch
 service_tier = "default"
 
 [features]

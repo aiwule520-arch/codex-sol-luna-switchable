@@ -1,4 +1,4 @@
-在我的桌面找到 `codex-sol-luna-switchable-public-v0.1.0.zip`，把它作为一个新的公共 GitHub 仓库发布。
+在我的桌面找到 `codex-sol-luna-switchable-public-v0.2.0.zip`，把它作为一个新的公共 GitHub 仓库发布。
 
 目标仓库名：
 `codex-sol-luna-switchable`
@@ -25,7 +25,7 @@
 8. 使用当前 `gh` 已登录账号创建 PUBLIC 仓库：
    `codex-sol-luna-switchable`
 9. Repository description 设置为：
-   `Switchable Codex profiles: GPT-6 Sol XHigh orchestrates while GPT-6 Luna handles bounded exploration, implementation, testing, and review.`
+   `Switchable Codex profiles: keep your selected root model while GPT-6 Luna handles bounded exploration, implementation, testing, and review.`
 10. 添加 topics：
     - codex
     - gpt-6
@@ -35,13 +35,13 @@
     - developer-tools
 11. push `main`。
 12. 创建 annotated tag：
-    `v0.1.0`
+    `v0.2.0`
 13. push tag，让仓库自带的 GitHub Actions Release workflow 自动创建 GitHub Release。
 14. 检查 GitHub Actions：
     - Validate workflow 是否通过
     - Release workflow 是否通过
-15. 检查 GitHub Release `v0.1.0` 是否存在，并确认包含：
-    - `codex-sol-luna-switchable-v0.1.0.zip`
+15. 检查 GitHub Release `v0.2.0` 是否存在，并确认包含：
+    - `codex-sol-luna-switchable-v0.2.0.zip`
     - `SHA256SUMS.txt`
 16. 如果 Release workflow 失败，读取失败原因；只修复仓库自身的问题，然后提交一个修复 commit，重新创建适当的新 patch tag。不要篡改已发布 release asset。
 17. 在仓库设置允许的范围内，启用/确认：
@@ -62,3 +62,9 @@
     - 任何未能启用的 GitHub 安全设置及原因
 
 这是我明确授权你创建这个新的 PUBLIC GitHub 仓库、push 这套开源配置并发布 v0.1.0 Release。除上述范围外，不要进行其他外部修改。
+
+
+Additional v0.2.0 verification:
+- Confirm none of the three profile files contains root-level `model =` or `model_reasoning_effort =`.
+- Confirm the Luna named-agent files still explicitly pin `gpt-6-luna` and their intended High/XHigh efforts.
+- Do not reintroduce a fixed Sol root model.

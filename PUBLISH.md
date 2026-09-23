@@ -9,7 +9,7 @@ codex-sol-luna-switchable
 Recommended description:
 
 ```text
-Switchable Codex profiles: GPT-6 Sol XHigh orchestrates while GPT-6 Luna handles bounded exploration, implementation, testing, and review.
+Switchable Codex profiles: keep your selected root model while GPT-6 Luna handles bounded exploration, implementation, testing, and review.
 ```
 
 Recommended topics:
@@ -39,14 +39,14 @@ git add .
 git commit -m "feat: initial public release"
 git branch -M main
 gh repo create codex-sol-luna-switchable --public --source=. --remote=origin --push \
-  --description "Switchable Codex profiles: GPT-6 Sol XHigh orchestrates while GPT-6 Luna handles bounded exploration, implementation, testing, and review."
+  --description "Switchable Codex profiles: keep your selected root model while GPT-6 Luna handles bounded exploration, implementation, testing, and review."
 ```
 
 Then create the first release:
 
 ```bash
-git tag -a v0.1.0 -m "v0.1.0"
-git push origin v0.1.0
+git tag -a v0.2.0 -m "v0.2.0"
+git push origin v0.2.0
 ```
 
 The included `Release` GitHub Actions workflow will validate the tag, build the ZIP and SHA-256 checksum, and create the GitHub Release automatically.

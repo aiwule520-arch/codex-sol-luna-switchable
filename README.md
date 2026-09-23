@@ -1,16 +1,16 @@
 # Codex Sol/Luna Switchable
 
-一个面向 Codex CLI 的社区配置：保留 **GPT-6 Sol XHigh** 作为主代理，把边界明确的探索、研究、实现、测试和首轮 Review 下放给 **GPT-6 Luna**。
+一个面向 Codex CLI 的社区配置：**Root 模型由你在 Codex 中自己选择**，而边界明确的探索、研究、实现、测试和首轮 Review 固定下放给 **GPT-6 Luna**。
 
 > 独立社区项目，与 OpenAI 无隶属或官方背书关系。模型与 Codex 可用性取决于你的账号、计划、地区和客户端版本。
 
 ## 设计目标
 
-默认模式 `sol-luna`：
+默认模式 `sol-luna`（名称为兼容保留；它不再把 Root 锁死为 Sol）：
 
 | 角色 | 模型 | Reasoning | Codex context override | Auto compact |
 |---|---|---:|---:|---:|
-| Root | GPT-6 Sol | XHigh | Codex 默认 | Codex 默认 |
+| Root | 用户当前选择 | 用户当前选择 | Codex / 当前会话决定 | Codex / 当前会话决定 |
 | Explorer | GPT-6 Luna | High | 872K | 200K |
 | Researcher | GPT-6 Luna | High | 872K | 200K |
 | Worker | GPT-6 Luna | XHigh | 872K | 240K |
@@ -35,7 +35,7 @@ codex-mode off
 codex-mode fast
 ```
 
-`on` 是推荐日常模式；`off` 禁用多代理；`fast` 是当前 Codex 能实际生效的整会话 Fast。由于当前 Codex 会让 child 继承 root 的 service tier，仓库不会声称可以稳定做到 “Sol Standard + Luna-only Fast”。
+`on` 是推荐日常模式；`off` 禁用多代理；`fast` 是当前 Codex 能实际生效的整会话 Fast。三个 profile 都不再覆盖 Root 的 `model` 或 `model_reasoning_effort`。由于当前 Codex 会让 child 继承 root 的 service tier，仓库不会声称可以稳定做到 “Sol Standard + Luna-only Fast”。
 
 ## 安装
 
@@ -92,14 +92,14 @@ codex --profile sol-luna
 ```text
 explorer -> gpt-6-luna / high
 worker   -> gpt-6-luna / xhigh
-root     -> gpt-6-sol  / xhigh
+root     -> 你在当前会话 / model picker 中实际选择的模型与 reasoning
 ```
 
 不要只根据父代理文字描述判断路由是否生效。
 
 ## 为什么不把所有 Luna 都设 Max
 
-这套配置优化的是“把昂贵的 Sol token 留给架构、取舍和最终验收”。Explorer、Researcher、Tester 主要是边界明确的执行工作，High 通常更合适；Worker 和 Reviewer 给 XHigh，以保留较强的实现与审查能力。并发上限设为 4，但正常任务优先使用 1–3 个真正有价值的子代理。
+这套配置优化的是“把 Root 的高价值上下文留给架构、取舍和最终验收”。Explorer、Researcher、Tester 主要是边界明确的执行工作，High 通常更合适；Worker 和 Reviewer 给 XHigh，以保留较强的实现与审查能力。并发上限设为 4，但正常任务优先使用 1–3 个真正有价值的子代理。
 
 ## Fast 的当前限制
 
@@ -111,15 +111,15 @@ Codex CLI 0.153.0 起有已记录行为：自定义 agent 的 `service_tier` 不
 因此：
 
 ```text
-sol-luna      = Sol Standard + Luna Standard
-sol-luna-fast = Sol Fast + Luna Fast
+sol-luna      = 当前选择的 Root / Standard + Luna Standard
+sol-luna-fast = 当前选择的 Root / Fast + Luna Fast
 ```
 
 当上游恢复 per-child tier override 后，再考虑给 Explorer / Worker / Tester 单独启用 Fast。
 
 ## 发布状态
 
-当前公共版本：`v0.1.0`
+当前公共版本：`v0.2.0`
 
 `0.x` 表示配置仍跟随 Codex 快速演进。发布规则见 [RELEASE_POLICY.md](RELEASE_POLICY.md)，兼容性说明见 [docs/COMPATIBILITY.md](docs/COMPATIBILITY.md)。
 
@@ -130,3 +130,19 @@ sol-luna-fast = Sol Fast + Luna Fast
 ## License
 
 MIT。详见 [LICENSE](LICENSE)。
+
+
+## v0.2.0：Root 模型自由选择
+
+从 `v0.2.0` 起，三个 profile 都**不再设置**：
+
+```toml
+model = "..."
+model_reasoning_effort = "..."
+```
+
+因此 profile 只控制多代理、Luna 路由、并发和 service tier；Root 模型与 reasoning 由 Codex 当前会话/模型选择器以及更底层配置决定。
+
+这意味着你可以在同一套 Luna worker 配置下自由使用 GPT-6 Sol、GPT-6 Astra 或后续支持的 Root 模型，而无需重写子代理配置。
+
+> 注意：如果你的基础 `config.toml`、项目 `.codex/config.toml` 或其他更高优先级配置仍显式固定 `model` / `model_reasoning_effort`，Codex 客户端的 model picker 可能受配置优先级影响。这个仓库只保证自己的三个 profile 不再固定 Root。

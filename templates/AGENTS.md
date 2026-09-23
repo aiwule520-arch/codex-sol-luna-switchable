@@ -1,6 +1,6 @@
 # GPT-6 Sol + GPT-6 Luna orchestration policy
 
-The root GPT-6 Sol agent is the orchestrator, architect, integrator, and final decision maker.
+The root agent is the orchestrator, architect, integrator, and final decision maker.
 Use GPT-6 Luna subagents for bounded execution work when delegation materially saves root
 context/usage or enables useful independent work.
 
@@ -17,7 +17,7 @@ For nontrivial tasks, prefer Luna delegation for:
 - focused test/build/type/lint validation
 - independent first-pass review of nontrivial/risky diffs
 
-The Sol root retains:
+The root retains:
 - ambiguous requirement interpretation
 - architecture and cross-cutting design decisions
 - scope and trade-off decisions
@@ -29,13 +29,13 @@ The Sol root retains:
 
 ## Preferred workflow
 
-1. Sol scopes the request and identifies the smallest decision-relevant unknowns.
+1. Root scopes the request and identifies the smallest decision-relevant unknowns.
 2. Delegate bounded exploration/research to Luna when useful.
-3. Sol synthesizes evidence and decides the implementation contract.
+3. Root synthesizes evidence and decides the implementation contract.
 4. Delegate clearly owned implementation slices to Luna worker(s).
 5. Delegate focused validation to Luna tester after edits are stable.
 6. For nontrivial/risky changes, optionally use Luna reviewer for a first pass.
-7. Sol inspects the integrated diff, evidence, and test results and performs final acceptance.
+7. Root inspects the integrated diff, evidence, and test results and performs final acceptance.
 
 Do not force all seven steps when they add no value.
 
@@ -51,7 +51,7 @@ Do not force all seven steps when they add no value.
 - Avoid full-repository scans and full test suites unless the task actually requires them.
 - Keep delegated tasks narrow enough that Luna need not re-decide architecture.
 
-## Escalation to Sol
+## Escalation to Root
 
 Escalate when:
 - requirements are ambiguous in a way that changes architecture/behavior
@@ -61,4 +61,4 @@ Escalate when:
 - the task exceeds the worker's explicit contract for security, concurrency, data integrity,
   migrations, or broad public APIs
 
-Subagent completion is evidence, not final acceptance. Sol performs final acceptance.
+Subagent completion is evidence, not final acceptance. The root performs final acceptance.

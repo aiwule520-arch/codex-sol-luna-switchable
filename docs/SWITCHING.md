@@ -44,3 +44,15 @@ Examples:
 At the time of this release, child agents follow the root service tier in current Codex multi-agent builds. Therefore `fast` is a whole-session choice.
 
 The project will only advertise Luna-only Fast after upstream Codex supports a verified per-child tier override again.
+
+
+## Root model selection in v0.2.0
+
+The profile names are retained for backward compatibility, but the profiles no longer define
+`model` or `model_reasoning_effort`.
+
+Choose the root model in Codex as you normally would. The Luna subagent roles remain pinned
+to their configured GPT-6 Luna model/effort.
+
+If another config layer explicitly pins the root model/reasoning, that layer may still affect
+what the Codex picker can override. This project does not modify the base `config.toml`.

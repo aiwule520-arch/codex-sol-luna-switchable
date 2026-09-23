@@ -1,8 +1,6 @@
 # Fast whole-session profile.
 # Current Codex behavior propagates the parent's service tier to child agents,
-# so this makes both the Sol root and Luna children Fast.
-model = "gpt-6-sol"
-model_reasoning_effort = "xhigh"
+# so this makes both the selected root model and Luna children Fast.
 service_tier = "fast"
 
 [features]
