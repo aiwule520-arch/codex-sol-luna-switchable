@@ -1,32 +1,6 @@
-# User-selected root model + Luna role workers (recommended daily profile)
-service_tier = "default"
+# Advanced / compatibility profile only. Daily use is: install once, then `codex`.
+# Leaves Root model, reasoning, service tier, and Fast choice to the user/session.
+# Luna role routing and fixed child settings come from the installed csl_luna_* roles.
 
 [features]
 multi_agent = true
-fast_mode = true
-
-[agents]
-enabled = true
-max_concurrent_threads_per_session = 4
-default_subagent_model = "gpt-6-luna"
-default_subagent_reasoning_effort = "high"
-
-[agents.explorer]
-description = "Fast read-only repository explorer for bounded code-path, symbol, dependency, and test discovery."
-config_file = "agents/explorer.toml"
-
-[agents.researcher]
-description = "Read-only technical researcher for repository evidence, docs, APIs, compatibility, and constraints."
-config_file = "agents/researcher.toml"
-
-[agents.worker]
-description = "Implementation worker for a clearly specified, bounded change with explicit file ownership."
-config_file = "agents/worker.toml"
-
-[agents.tester]
-description = "Focused validation agent for tests, type checks, builds, lint, and failure triage."
-config_file = "agents/tester.toml"
-
-[agents.reviewer]
-description = "Independent read-only first-pass code reviewer for nontrivial or risky diffs before root acceptance."
-config_file = "agents/reviewer.toml"

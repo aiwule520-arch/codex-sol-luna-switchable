@@ -1,9 +1,5 @@
-# User-selected root model only — Luna/multi-agent kill switch
-service_tier = "default"
+# Legacy Advanced / compatibility profile only. This disables all Codex
+# multi-agent for this session; use `python scripts/install.py off` for Luna OFF.
 
 [features]
 multi_agent = false
-fast_mode = true
-
-[agents]
-enabled = false

@@ -1,6 +1,13 @@
 # Changelog
 
-All notable changes are documented here.
+## 0.3.0
+
+- Root model and reasoning remain selected by the user; normal launch is plain `codex`.
+- Added private `csl_luna_*` roles, dedicated role files, and scoped managed orchestration.
+- Preserved configured Luna model, reasoning, context-window overrides, and auto-compact limits.
+- Added guarded plan/apply/on/off/status/rollback/uninstall behavior and non-interference checks.
+- Clarified that OFF uses the installer, `sol-only` is legacy/advanced compatibility, and Fast is whole-session.
+- Added local release packaging dry-run and requirement-to-test coverage matrix.
 
 ## [0.2.1] - 2026-09-23
 

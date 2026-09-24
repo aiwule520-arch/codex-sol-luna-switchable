@@ -1,75 +1,27 @@
-# Compatibility
+# 兼容性与限制
 
-This document records upstream assumptions that must be checked before each release.
+## CLI 与 Python
 
-## GPT-6 Luna
+角色路由必须由实际 Codex child rollout 的 `turn_context.payload.model` 和 `payload.effort` 验证；版本字符串或 TOML 本身不能证明路由。CLI 低于安装器支持基线时，安装应停止。预发行版本会明确标记 warning。Python 需要 3.11+ 的标准库 `tomllib`。
 
-At the time `v0.1.0` was prepared, the OpenAI Codex model catalog reported:
+## Root、permissions 与非干涉
 
-- slug: `gpt-6-luna`
-- default context window: `272000`
-- maximum context-window override: `872000`
-- minimum client version: `0.155.0`
-- Fast tier description: `1.5x speed`
+Root model、reasoning、tier、approval、sandbox 和 permissions 都由用户/会话控制。角色文件不配置 sandbox 或权限；Explorer、Researcher、Reviewer 通过 developer instructions 约束为只读，Worker 和 Tester 继承 parent session 权限。
 
-Source of truth:
+安装器只维护自己的私有 Luna role registrations、专属 role 文件、用户级全局 orchestration managed block、manifest 和备份。必须保留其他 MCP、providers、hooks、permissions、projects、agents 和所有 managed block 外原文。所有权不明确或检测到 drift 时应停止，绝不覆盖。
 
-- https://github.com/openai/codex/blob/main/codex-rs/models-manager/models.json
-- https://github.com/openai/codex/blob/main/codex-rs/core/config.schema.json
+安装不需要 API key，不启动 telemetry 服务，也不发送 telemetry。
 
-The API model may advertise a larger total model context than Codex exposes as its maximum config override. This project uses the Codex-visible maximum because Codex owns the runtime context budgeter.
+## Profiles 与 Fast
 
-## Profiles
+Installer leaves same-named files in `CODEX_HOME` unmanaged and reports them as `LEGACY_PROFILE_PRESENT / UNMANAGED`. Profiles 是 Advanced / Legacy Compatibility 功能，不是日常开关；普通 v0.3 用户不需要 profile：
 
-Current Codex profile layering supports:
+- 日常使用 `python scripts/install.py apply` 后运行普通 `codex`。
+- 使用 `python scripts/install.py off/on` 管理本工具的 Luna 策略。
+- `sol-only` 是关闭整个 session multi-agent 的 legacy/advanced profile；不要将其推荐为 Luna OFF。
+- `sol-luna-fast` 只表示 whole-session Fast。
+- Luna 遵循当前 Codex child tier 行为；不宣传 Standard Root + Luna-only Fast，也不使用未文档化 per-child tier hack。
 
-```text
-$CODEX_HOME/config.toml
-+ $CODEX_HOME/<name>.config.toml selected by --profile <name>
-```
+## Context telemetry
 
-This project does not write a legacy `profile = "..."` selector into the base config.
-
-## Child service tier
-
-Current Codex behavior makes children follow the root service tier. Track:
-
-- https://github.com/openai/codex/issues/42612
-- https://github.com/openai/codex/issues/42665
-
-Release maintainers must re-test this behavior before claiming independent Luna Fast support.
-
-## Release compatibility gate
-
-Before a release:
-
-1. Check the current OpenAI Codex model catalog.
-2. Check the current config schema for `[agents]`, `config_file`, model and context keys.
-3. Check whether the child service-tier issues are still applicable.
-4. Run the repository validation workflow.
-5. Test at least one real `explorer` and `worker` child on a current Codex CLI.
-
-
-## Root model selection
-
-From v0.2.0, this project intentionally omits `model` and `model_reasoning_effort` from all
-three root profiles. In current Codex source, both are optional configuration overrides.
-
-This avoids the profile itself locking the root model. Actual picker behavior can still be
-affected by other configuration layers. Upstream issues have documented cases where
-project-scoped explicit model/reasoning values prevent or override picker choices.
-
-Relevant upstream references:
-
-- https://github.com/openai/codex/blob/main/codex-rs/config/src/config_toml.rs
-- https://github.com/openai/codex/blob/main/codex-rs/config/src/profile_toml.rs
-- https://github.com/openai/codex/issues/36163
-- https://github.com/openai/codex/issues/34535
-
-## Root multi-agent compatibility
-
-The root model is user-selectable, but it must be compatible with the active Codex
-multi-agent backend and able to spawn GPT-6 Luna subagents. Compatibility can change
-across Codex versions and model-catalog updates. When routing fails, check the current
-Codex model catalog and inspect actual child session metadata; do not assume that every
-available root model can spawn Luna.
+各角色提供 context window 与 auto-compact 配置覆盖（见 Architecture）。如果 rollout 没有提供 context-window runtime telemetry，只能称为 configured override，不能称为 runtime independently verified。

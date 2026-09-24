@@ -1,35 +1,27 @@
 # Codex Sol/Luna Switchable
 
-A community configuration for Codex CLI that keeps the **root model user-selectable** while delegating bounded exploration, research, implementation, testing, and first-pass review to **GPT-6 Luna**.
+**Root: you choose the model and reasoning. Luna: it takes on execution work suited to delegation.**
 
-> Independent community project. Not affiliated with or endorsed by OpenAI. Model and Codex availability depend on account, plan, region, and client version.
+Install once, then run Codex normally. Ordinary v0.3 users need no profile:
 
-## Profiles
-
-```bash
-codex --profile sol-luna
-codex --profile sol-only
-codex --profile sol-luna-fast
-```
-
-`sol-luna` is the recommended daily profile. `sol-only` disables multi-agent delegation. `sol-luna-fast` opts the whole session into Fast because current Codex children inherit the root service tier. None of these profiles pins the root `model` or `model_reasoning_effort`; the active Codex selection/config decides the root.
-
-The root model is user-selectable, but it must be compatible with the active Codex multi-agent backend and able to spawn GPT-6 Luna subagents. Compatibility may change across Codex versions and model-catalog updates, so routing should be verified from actual child session metadata.
-
-## Install
-
-Requires Codex CLI 0.155.0+ and Python 3.11+.
-
-```bash
-python scripts/install.py plan
+```powershell
 python scripts/install.py apply
-python scripts/install.py status
+codex
 ```
 
-The installer manages only the three profile files and five agent role files. It does not edit `$CODEX_HOME/config.toml`.
+```powershell
+python scripts/install.py off      # disable this tool's Luna orchestration
+python scripts/install.py on       # enable it again
+python scripts/install.py status   # inspect status
+```
 
-See [README.md](README.md) for the full Chinese documentation and [docs/INSTALL.md](docs/INSTALL.md) for installation details.
+This tool does not pin the Root model or reasoning. It preserves MCP, providers, hooks, permissions, and project configuration. It requires no API key and sends no telemetry. It manages only its own Luna roles and global orchestration managed block.
 
-## License
+## Advanced usage
 
-MIT.
+- `sol-luna`, `sol-only`, and `sol-luna-fast` in `profiles/` are Advanced / Legacy Compatibility sources. The installer never installs, overwrites, validates, or removes same-named user profiles. Existing ones only produce a `LEGACY_PROFILE_PRESENT / UNMANAGED` notice. Use `python scripts/install.py off` to disable Luna orchestration; do not disable Codex multi-agent globally.
+- Status checks the current TOML, managed blocks, and plugin role files. Later valid Root, MCP, provider, hooks, permissions, or project edits do not trigger plugin drift. Uninstall and later rollback retain those user edits. Failed transactions restore the exact pre-operation bytes.
+- Use `sol-luna-fast` only when you explicitly want whole-session Fast. Luna follows Codex child-tier behavior; Standard Root + Luna-only Fast is not supported as a guarantee.
+- Luna context-window and auto-compact values are **configured overrides**. Independent runtime context-window telemetry is not currently available.
+
+See [Installation](docs/INSTALL.md), [Switching](docs/SWITCHING.md), [Architecture](docs/ARCHITECTURE.md), and [Compatibility](docs/COMPATIBILITY.md) for details.

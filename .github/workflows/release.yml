@@ -18,23 +18,30 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: "3.11"
-      - name: Validate
-        run: |
-          python scripts/validate.py
-          git diff --check
-      - name: Verify tag matches VERSION
+      - name: Compile Python sources
+        run: python -m py_compile scripts/install.py scripts/validate.py scripts/package_release.py
+      - name: Unit tests
+        run: python -m unittest discover -s tests -p "test_*.py" -v
+      - name: Validate release contents
+        run: python scripts/validate.py
+      - name: Check tag matches VERSION
         shell: bash
-        run: |
-          test "${GITHUB_REF_NAME#v}" = "$(cat VERSION)"
-      - name: Package
-        run: python scripts/package_release.py --version "${GITHUB_REF_NAME}"
+        run: test "${GITHUB_REF_NAME#v}" = "$(cat VERSION)"
+      - name: Build and verify release assets
+        shell: bash
+        run: python scripts/package_release.py --version "${GITHUB_REF_NAME#v}" --output-dir dist
+      - name: Git whitespace check
+        run: git diff --check
       - name: Publish GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
+        shell: bash
         run: |
+          notes_file=".github/release-notes/${GITHUB_REF_NAME}.md"
+          test -f "$notes_file"
           gh release create "$GITHUB_REF_NAME" \
-            dist/codex-sol-luna-switchable-"$GITHUB_REF_NAME".zip \
+            "dist/codex-sol-luna-switchable-$GITHUB_REF_NAME.zip" \
             dist/SHA256SUMS.txt \
             --verify-tag \
-            --generate-notes \
-            --title "Codex Sol/Luna Switchable $GITHUB_REF_NAME"
+            --title "Codex Sol/Luna Switchable $GITHUB_REF_NAME" \
+            --notes-file "$notes_file"

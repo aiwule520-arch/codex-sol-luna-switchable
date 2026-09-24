@@ -1,0 +1,8 @@
+# Easy Mode does not need a profile selector or a config.toml edit.
+# Install once with `python scripts/install.py apply`, then launch with `codex`.
+# Use `python scripts/install.py off` and `on` to disable/enable only this
+# package's private Luna role registrations and orchestration instructions.
+#
+# The files sol-luna.config.toml, sol-only.config.toml, and
+# sol-luna-fast.config.toml are Advanced/compatibility profiles. Select one
+# explicitly with `codex --profile <name>` only when you intend to use it.

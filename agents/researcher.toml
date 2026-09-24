@@ -1,23 +1,7 @@
-name = "researcher"
-description = "Read-only technical researcher for bounded evidence gathering."
-
 model = "gpt-6-luna"
 model_reasoning_effort = "high"
-
-# GPT-6 Luna API has a 1.05M total context window.
-# Current Codex model catalog exposes max_context_window = 872,000,
-# so use the Codex-visible maximum rather than lying to its budgeter.
 model_context_window = 872000
 model_auto_compact_token_limit = 200000
-
-sandbox_mode = "read-only"
-
-# FUTURE NOTE:
-# If/when Codex restores per-child service-tier overrides, the roles that benefit
-# from speed can add:
-# service_tier = "fast"
-# Current builds make children follow the parent tier, so this is intentionally
-# NOT enabled here.
 
 developer_instructions = """
 You are a bounded technical researcher working for the root orchestrator.
