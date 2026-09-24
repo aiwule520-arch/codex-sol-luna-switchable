@@ -204,7 +204,7 @@ class InstallTests(unittest.TestCase):
             failed = False
             def fail_manifest(path: Path, data: bytes | None, expected: dict) -> None:
                 nonlocal failed
-                if path == manifest_path and not failed:
+                if path.resolve() == manifest_path.resolve() and not failed:
                     failed = True
                     original_atomic(path, data, expected)
                     raise OSError("injected manifest write failure")
